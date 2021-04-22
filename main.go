@@ -108,14 +108,31 @@ func main() {
 	}
 
 	router := mux.NewRouter()
-	cluster, _ := gocb.Connect(fmt.Sprintf("%s:8091", host))
-	cluster.Authenticate(gocb.PasswordAuthenticator{
+	cluster, err := gocb.Connect(fmt.Sprintf("%s:8091", host))
+	if err != nil {
+		fmt.Printf("failed to connect to couchbase cluster: %s\n", err)
+		os.Exit(1)
+	}
+
+	if err := cluster.Authenticate(gocb.PasswordAuthenticator{
 		Username: "Administrator",
 		Password: "password",
-	})
-	//cluster, _ := gocb.Connect("172.17.0.5")
-	//bucket, _ := cluster.OpenBucket("cars", "password")
-	bucket, _ = cluster.OpenBucket("cars", "")
+	}); err != nil {
+		fmt.Printf("failed to auth to couchbase: %s\n", err)
+		os.Exit(1)
+	}
+
+	bucket, err = cluster.OpenBucket("cars", "")
+	if err != nil {
+		fmt.Printf("failed to connect to couchbase cluster: %s\n", err)
+		os.Exit(1)
+	}
+
+	index := gocb.NewN1qlQuery("CREATE INDEX IF NOT EXISTS ON cars USING GSI")
+	if _, err = bucket.ExecuteN1qlQuery(index, nil); err != nil {
+		fmt.Printf("failed to create index: %s\n", err)
+	}
+
 	router.HandleFunc("/cars", GetCarsEndpoint).Methods("GET")
 	router.HandleFunc("/car/{id}", GetCarEndpoint).Methods("GET")
 	router.HandleFunc("/car/camry/2021", GetCarPartsEndpoint).Methods("GET")
