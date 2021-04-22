@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: "cardata-0cf2"
+    labels:
+        app: "cardata-0cf2"
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 12345
+      targetPort: 12345
+      protocol: TCP
+      name: http
+    selector:
+        app: "cardata-0cf2"
