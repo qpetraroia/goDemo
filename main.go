@@ -128,10 +128,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	if _, err = bucket.ExecuteN1qlQuery(index, nil); err != nil {
-		fmt.Printf("failed to create index: %s\n", err)
-	}
-
 	router.HandleFunc("/cars", GetCarsEndpoint).Methods("GET")
 	router.HandleFunc("/car/{id}", GetCarEndpoint).Methods("GET")
 	router.HandleFunc("/car/camry/2021", GetCarPartsEndpoint).Methods("GET")
