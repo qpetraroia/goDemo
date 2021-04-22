@@ -107,6 +107,8 @@ func main() {
 		host = hostEnv
 	}
 
+	fmt.Println(host)
+	fmt.Printf("host from pod: %s\n", host)
 	router := mux.NewRouter()
 	cluster, err := gocb.Connect(fmt.Sprintf("%s:8091", host))
 	if err != nil {
