@@ -84,14 +84,24 @@ spec:
     spec:
       containers:
       - name: go-web-app
-        image: alexeldeib/go-web-app:index
+        image: qpetraroia.azurecr.io/go-web-app
         imagePullPolicy: Always
         ports:
         - containerPort: 12345
           name: server
         env:
+        - name: Couchbase__Username
+          valueFrom:
+            secretKeyRef:
+              name: cb-hellomicroservices-auth
+              key: username
+        - name: Couchbase__Password
+          valueFrom:
+            secretKeyRef:
+              name: cb-hellomicroservices-auth
+              key: password
         - name: DB_HOST
-          value: couchbase
+          value: cb-example
         resources:
           requests:
             cpu: 100m

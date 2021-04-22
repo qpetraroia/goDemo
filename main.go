@@ -128,7 +128,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	index := gocb.NewN1qlQuery("CREATE INDEX IF NOT EXISTS ON cars USING GSI")
 	if _, err = bucket.ExecuteN1qlQuery(index, nil); err != nil {
 		fmt.Printf("failed to create index: %s\n", err)
 	}
