@@ -71,16 +71,16 @@ spec:
 apiVersion: apps/v1 
 kind: Deployment
 metadata:
-  name: carData
+  name: cardata
 spec:
   selector:
     matchLabels:
-      app: carData
+      app: cardata
   replicas: 1 # tells deployment to run # pods matching the template
   template: # create pods using pod definition in this template
     metadata:
       labels:
-        app: carData
+        app: cardata
     spec:
       containers:
       - name: go-web-app
@@ -113,13 +113,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: carData
+  name: cardata
 spec:
   ports:
   - port: 80
     targetPort: 12345
     protocol: TCP
   selector:
-    app: carData
+    app: cardata
   type: LoadBalancer
 
