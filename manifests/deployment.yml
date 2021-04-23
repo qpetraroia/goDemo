@@ -81,8 +81,6 @@ spec:
         - containerPort: 12345
           name: server
         env:
-        - name: Couchbase__Username
-        - name: Couchbase__Password
         - name: DB_HOST
           value: cb-example
         resources:
