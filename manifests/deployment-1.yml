@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "cardata-8afb"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "cardata-8afb"
+  template:
+    metadata:
+      labels:
+        app: "cardata-8afb"
+    spec:
+      containers:
+        - name: "cardata-8afb"
+          image: "qpetraroia.azurecr.io/cardata"
+          ports:
+          - containerPort: 12345
