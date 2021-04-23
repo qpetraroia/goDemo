@@ -91,6 +91,7 @@ func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
 // }
 
 func GetCarPartsEndpoint(w http.ResponseWriter, req *http.Request) {
+	log.Print("Car inserted into DB: { 2021 Camry Engine 2021 Camry Wheelset 2021 Light Package}")
 	parts := []Part{
 		{
 			Engine: "2021 Camry Engine",
@@ -99,7 +100,7 @@ func GetCarPartsEndpoint(w http.ResponseWriter, req *http.Request) {
 		},
 	}
 	json.NewEncoder(w).Encode(parts)
-	log.Print("Car inserted into DB: { 2021 Camry Engine 2021 Camry Wheelset 2021 Light Package}")
+	//log.Print("Car inserted into DB: { 2021 Camry Engine 2021 Camry Wheelset 2021 Light Package}")
 
 }
 
