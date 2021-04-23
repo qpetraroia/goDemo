@@ -1,13 +1,4 @@
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: cb-example-auth
-type: Opaque
-data:
-  username: QWRtaW5pc3RyYXRvcg==  # Administrator
-  password: cGFzc3dvcmQ=          # password
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -91,15 +82,7 @@ spec:
           name: server
         env:
         - name: Couchbase__Username
-          valueFrom:
-            secretKeyRef:
-              name: cb-hellomicroservices-auth
-              key: username
         - name: Couchbase__Password
-          valueFrom:
-            secretKeyRef:
-              name: cb-hellomicroservices-auth
-              key: password
         - name: DB_HOST
           value: cb-example
         resources:
