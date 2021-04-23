@@ -82,7 +82,7 @@ spec:
           name: server
         env:
         - name: DB_HOST
-          value: cb-example
+          value: couchbase
         resources:
           requests:
             cpu: 100m
