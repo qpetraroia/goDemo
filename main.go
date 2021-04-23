@@ -56,6 +56,7 @@ func GetCarsEndpoint(w http.ResponseWriter, req *http.Request) {
 	for rows.Next(&row) {
 		car = append(car, row.Car)
 	}
+	log.Print("All cars: ", car)
 	json.NewEncoder(w).Encode(car)
 
 }
@@ -69,14 +70,13 @@ func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
 	n1qlParams = append(n1qlParams, car.Name)
 	n1qlParams = append(n1qlParams, car.Manufacturer)
 	n1qlParams = append(n1qlParams, car.Year)
-	log.Print(n1qlParams)
 	_, err := bucket.ExecuteN1qlQuery(query, n1qlParams)
 	if err != nil {
 		w.WriteHeader(401)
 		w.Write([]byte(err.Error()))
 		return
 	}
-	log.Print(car)
+	log.Print("Car inserted into DB: ", car)
 	json.NewEncoder(w).Encode(car)
 }
 
