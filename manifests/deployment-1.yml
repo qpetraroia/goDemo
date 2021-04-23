@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "cardata-1166"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "cardata-1166"
+  template:
+    metadata:
+      labels:
+        app: "cardata-1166"
+    spec:
+      containers:
+        - name: "cardata-1166"
+          image: "qpetraroia.azurecr.io/cardata"
+          ports:
+          - containerPort: 12345
