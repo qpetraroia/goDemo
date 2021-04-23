@@ -40,7 +40,7 @@ jobs:
       - uses: Azure/k8s-deploy@v1
         with:
           manifests: |
-            manifests/couchbase.yaml
-            manifests/deployment.yaml
+            manifests/couchbase.yml
+            manifests/deployment.yml
           images: |
             ${{ secrets.CONTAINER_REGISTRY }}.azurecr.io/go-web-app:${{ github.sha }}
