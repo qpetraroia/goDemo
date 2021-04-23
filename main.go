@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"log/syslog"
 	"net/http"
 	"os"
 
@@ -61,6 +62,12 @@ func GetCarsEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
+	logwriter, e := syslog.New(syslog.LOG_NOTICE, "createCar")
+	if e == nil {
+		log.SetOutput(logwriter)
+	}
+
+	log.Print("Hello System Log")
 
 	var car Car
 	var n1qlParams []interface{}
@@ -76,6 +83,7 @@ func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
+	log.Print(json.NewEncoder(w).Encode(car))
 	json.NewEncoder(w).Encode(car)
 }
 
