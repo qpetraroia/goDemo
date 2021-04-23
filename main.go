@@ -94,7 +94,7 @@ func GetCarPartsEndpoint(w http.ResponseWriter, req *http.Request) {
 		{
 			Engine: "2021 Camry Engine",
 			Tires:  "2021 Camry Wheelset",
-			Lights: "2020 Light Package",
+			Lights: "2021 Light Package",
 		},
 	}
 	json.NewEncoder(w).Encode(parts)

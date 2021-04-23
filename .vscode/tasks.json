@@ -4,12 +4,12 @@
 		{
 			"label": "bridge-to-kubernetes.resource",
 			"type": "bridge-to-kubernetes.resource",
-			"resource": "godemo",
+			"resource": "cardata",
 			"resourceType": "service",
 			"ports": [
 				12345
 			],
-			"targetCluster": "carData",
+			"targetCluster": "CarData",
 			"targetNamespace": "default",
 			"useKubernetesServiceEnvironmentVariables": false
 		}
