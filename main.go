@@ -56,8 +56,9 @@ func GetCarsEndpoint(w http.ResponseWriter, req *http.Request) {
 	for rows.Next(&row) {
 		car = append(car, row.Car)
 	}
-	log.Print("All cars: ", car)
+	//log.Print("All cars: ", car)
 	json.NewEncoder(w).Encode(car)
+	log.Print("All cars: ", car)
 
 }
 
@@ -76,8 +77,9 @@ func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
 		w.Write([]byte(err.Error()))
 		return
 	}
-	log.Print("Car inserted into DB: ", car)
+	//log.Print("Car inserted into DB: ", car)
 	json.NewEncoder(w).Encode(car)
+	log.Print("Car inserted into DB: ", car)
 }
 
 // func UpdateCarEndpoint(w http.ResponseWriter, req *http.Request) {
