@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: "cardata-8afb"
+    labels:
+        app: "cardata-8afb"
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 12345
+      targetPort: 12345
+      protocol: TCP
+      name: http
+    selector:
+        app: "cardata-8afb"
