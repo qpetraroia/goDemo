@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"log/syslog"
 	"net/http"
 	"os"
 
@@ -62,13 +61,6 @@ func GetCarsEndpoint(w http.ResponseWriter, req *http.Request) {
 }
 
 func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
-	logwriter, e := syslog.New(syslog.LOG_NOTICE, "createCar")
-	if e == nil {
-		log.SetOutput(logwriter)
-	}
-
-	log.Print("Hello System Log")
-
 	var car Car
 	var n1qlParams []interface{}
 	_ = json.NewDecoder(req.Body).Decode(&car)
@@ -77,25 +69,26 @@ func CreateCarEndpoint(w http.ResponseWriter, req *http.Request) {
 	n1qlParams = append(n1qlParams, car.Name)
 	n1qlParams = append(n1qlParams, car.Manufacturer)
 	n1qlParams = append(n1qlParams, car.Year)
+	log.Print(n1qlParams)
 	_, err := bucket.ExecuteN1qlQuery(query, n1qlParams)
 	if err != nil {
 		w.WriteHeader(401)
 		w.Write([]byte(err.Error()))
 		return
 	}
-	log.Print(json.NewEncoder(w).Encode(car))
+	log.Print(car)
 	json.NewEncoder(w).Encode(car)
 }
 
-func UpdateCarEndpoint(w http.ResponseWriter, req *http.Request) {
-	return
+// func UpdateCarEndpoint(w http.ResponseWriter, req *http.Request) {
+// 	return
 
-}
+// }
 
-func DeleteCarEndpoint(w http.ResponseWriter, req *http.Request) {
-	return
+// func DeleteCarEndpoint(w http.ResponseWriter, req *http.Request) {
+// 	return
 
-}
+// }
 
 func GetCarPartsEndpoint(w http.ResponseWriter, req *http.Request) {
 	parts := []Part{
@@ -142,7 +135,7 @@ func main() {
 	router.HandleFunc("/car/{id}", GetCarEndpoint).Methods("GET")
 	router.HandleFunc("/car/camry/2021", GetCarPartsEndpoint).Methods("GET")
 	router.HandleFunc("/car", CreateCarEndpoint).Methods("PUT")
-	router.HandleFunc("/car/{id}", UpdateCarEndpoint).Methods("POST")
-	router.HandleFunc("/car/{id}", DeleteCarEndpoint).Methods("DELETE")
+	// router.HandleFunc("/car/{id}", UpdateCarEndpoint).Methods("POST")
+	// router.HandleFunc("/car/{id}", DeleteCarEndpoint).Methods("DELETE")
 	log.Fatal(http.ListenAndServe(":12345", router))
 }
